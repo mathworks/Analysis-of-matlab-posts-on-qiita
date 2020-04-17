@@ -13,9 +13,9 @@ matlab タグ、simulink タグがついた全記事を取得します。ご自�
 
 ```matlab:Code
 clear
-loadFlag = true;
+loadFlag = false;
 
-if loadFlag || exist('allArticles.mat','file')
+if loadFlag || ~exist('allArticles.mat','file')
     % アクセストークン使用（ご自身の accessToken を取得してお試しください）
     accessToken = 'Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
     opts = weboptions('HeaderFields',{'Authorization',accessToken});
@@ -52,17 +52,24 @@ end
 # データ確認
 
 
-冒頭の8アイテムを表示してみます。変数として `title`、`rendered_body` や `created_at`、`like_count` など全16変数が取れていることが分かります。 
+冒頭の8アイテムを表示してみます。変数として `title`、`rendered_body` や `created_at`、`like_count` など全16変数が取れていることが分かります。 (rendered_body と body はアレなので削除して表示します。)
 
 
 
 ```matlab:Code
-head(data)
+head(removevars(data,{'rendered_body','body'}))
 ```
 
-| |rendered_body|body|coediting|comments_count|created_at|group|id|likes_count|private|reactions_count|tags|title|updated_at|url|user|page_views_count|
-|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-|1|
+| |coediting|comments_count|created_at|group|id|likes_count|private|reactions_count|tags|title|updated_at|url|user|page_views_count|
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+|1|0|0|'2018-05-05T23:01:26+09:00'|[]|'009a739099fbd50e09ef'|1|0|0|2x1 struct|'時系列データ分析の書籍のサンプルデータをMATLABで試してみた'|'2018-05-05T23:01:26+09:00'|'https://qiita.com/Alberobellojiro/items/009a739099fbd50e09ef'|1x1 struct|[]|
+|2|0|6|'2019-09-02T01:13:35+09:00'|[]|'00c11b080c6905dd4444'|32|0|0|3x1 struct|'MATLABx深層学習x顕微赤外分光法'|'2019-09-02T01:15:47+09:00'|'https://qiita.com/nHounoki/items/00c11b080c6905dd4444'|1x1 struct|[]|
+|3|0|0|'2018-08-09T14:05:25+09:00'|[]|'00f695f6c476d93897bc'|4|0|0|5x1 struct|'スマホで撮った写真をディープラーニングで判定してみる　(学習編)'|'2018-08-17T14:27:20+09:00'|'https://qiita.com/p_panther/items/00f695f6c476d93897bc'|1x1 struct|[]|
+|4|0|0|'2015-09-12T01:20:41+09:00'|[]|'0190eeee811ceecdd457'|0|0|0|1x1 struct|'Matlab Wars 1.0'|'2015-09-12T01:31:04+09:00'|'https://qiita.com/Shadowys/items/0190eeee811ceecdd457'|1x1 struct|[]|
+|5|0|0|'2017-11-26T11:01:38+09:00'|[]|'01e9dc011193e24caa0d'|1|0|0|4x1 struct|'MATLABとMatplotlib 3dの座標系 | viewの違い > view(azimuth=0) > MATLAB:xaxisが横軸 | Matplotlib:yaxisが横軸 > MatplotlibとMATLABで同じ表示にするには'|'2017-11-27T08:11:17+09:00'|'https://qiita.com/7of9/items/01e9dc011193e24caa0d'|1x1 struct|[]|
+|6|0|0|'2020-02-08T19:10:45+09:00'|[]|'01f7ed446a4ccfca5972'|2|0|0|5x1 struct|'畳み込みニューラルネットワーク（CNN)の説明が、頑張りすぎでは？（MathWorksのdeepDreamImageとかも）'|'2020-03-14T04:32:15+09:00'|'https://qiita.com/enoughspacefor/items/01f7ed446a4ccfca5972'|1x1 struct|[]|
+|7|0|0|'2020-04-06T10:09:47+09:00'|[]|'02b5b0b2bafe51d97602'|5|0|0|4x1 struct|'1.6 Simulinkによる画像処理'|'2020-04-06T10:42:21+09:00'|'https://qiita.com/tohruk/items/02b5b0b2bafe51d97602'|1x1 struct|[]|
+|8|0|0|'2019-08-23T13:50:07+09:00'|[]|'02cce7d5d2b89ab08b37'|7|0|0|5x1 struct|'MATLAB の Live Editor でインタラクティブな処理してみた。'|'2019-08-23T14:06:23+09:00'|'https://qiita.com/kkado/items/02cce7d5d2b89ab08b37'|1x1 struct|[]|
 
 # 時系列データ集計
 
