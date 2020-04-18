@@ -1,5 +1,5 @@
 # Qiita API でデータ抽出
-
+[![View Qiita API を使った Qiita 投稿解析例  on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://jp.mathworks.com/matlabcentral/fileexchange/75099-qiita-api-qiita)
 
 Qiita は Qiita API を公開しており、様々なデータ抽出を可能にしてくれています。ここでは MATLAB / Simulink タグの投稿状況を見てみます。
 
