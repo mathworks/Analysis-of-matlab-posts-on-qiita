@@ -138,7 +138,7 @@ tData.tags{1}
 
 
 
-ここでは `timetable` 型の各行に関数を適用する `rowfun` 関数を使ってみます。`tags` については構造体の `name` メンバーだけを `string` 型のベクトルに変換など。諦めて for ループで回した方が可読性がよいかもしれませんね。
+ここでは `timetable` 型の各行に関数を適用する `rowfun` 関数を使ってみます。`tags` については構造体の `name` メンバーだけを `string` 型のベクトルに変換。諦めて for ループで回した方が可読性がよいかもしれませんね。
 
 
 
@@ -169,6 +169,22 @@ head(tData)
 |6|15/Apr/2020 07:59:57|'【MATLAB】行列を与えると随伴行列を返す関数を作って、公式と同じ結果が得られるか試してみた'|"takumi_ueda"|2|1x3 string|"https://qiita.com/takumi_ueda/items/515e73fb69952e276ae0"|
 |7|15/Apr/2020 02:52:55|'n次元ベクトルの回転行列(ゆっくり解説動画もついてるんだぜ！)'|"LGTM912"|2|1x5 string|"https://qiita.com/LGTM912/items/e7176ddb6c06bb09a64d"|
 |8|14/Apr/2020 09:50:39|'MATLABでMeCabの品詞細分類を活用する：その2'|"h583"|2|1x3 string|"https://qiita.com/h583/items/e223d9c75b653fda7d34"|
+
+# ワードクラウド
+
+
+どんなタグがあるのかワードクラウド表示してみます。
+
+
+
+```matlab:Code
+alltags = [tData.tags{:}];
+[N,Categories] = histcounts(categorical(alltags));
+wordcloud(Categories,N)
+```
+
+
+![figure_0.png](README_images/figure_0.png)
 
 # 月間投稿数推移
 
@@ -204,7 +220,7 @@ ylabel('# of post')
 ```
 
 
-![figure_0.png](README_images/figure_0.png)
+![figure_1.png](README_images/figure_1.png)
 
 # OnThisDay
 
@@ -317,7 +333,7 @@ histogram(categorical(tData.dayofWeek));
 ```
 
 
-![figure_1.png](README_images/figure_1.png)
+![figure_2.png](README_images/figure_2.png)
 
 
 
@@ -335,5 +351,5 @@ histogram(categorical(tData.dayofWeek),["Sunday","Monday","Tuesday","Wednesday",
 ```
 
 
-![figure_2.png](README_images/figure_2.png)
+![figure_3.png](README_images/figure_3.png)
 
