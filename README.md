@@ -1,7 +1,12 @@
 # Qiita API でデータ抽出
-[![View Qiita API を使った Qiita 投稿解析例  on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://jp.mathworks.com/matlabcentral/fileexchange/75099-qiita-api-qiita)
+
 
 Qiita は Qiita API を公開しており、様々なデータ抽出を可能にしてくれています。ここでは MATLAB / Simulink タグの投稿状況を見てみます。
+
+
+
+
+![image_0.png](README_images/image_0.png)
 
 
 # 記事データ取得
@@ -33,7 +38,7 @@ if loadFlag || ~exist('allArticles.mat','file')
             if isempty(tmp)
                 break;
             end
-            data = [data;tmp]; %#ok<AGROW> 
+            data = [data;tmp]; %#ok<AGROW>
             page = page + 1;
         end
     end
@@ -45,7 +50,7 @@ if loadFlag || ~exist('allArticles.mat','file')
     data = data(ia,:);
     save('allArticles.mat','data')
 else
-    load allArticles.mat %#ok<UNRCH> 
+    load allArticles.mat %#ok<UNRCH>
 end
 ```
 
@@ -222,6 +227,62 @@ ylabel('# of post')
 
 ![figure_1.png](README_images/figure_1.png)
 
+# いいね（LGTM）数の推移
+## 中央値
+
+
+ここも `retime` の出番です。ただ今回は外れ値（バズった記事の影響を鑑みて）中央値を見てみます。集計方法 `method` を `median` にします。集計期間は四半期 `quarterly` で。
+
+
+
+```matlab:Code
+tmp = retime(tData(:,'likes_count'),'quarterly',@median);
+```
+
+
+
+棒グラフ表示しますと・・特に増えているわけではないですね。。
+
+
+
+```matlab:Code
+bar(tmp.Time,tmp.likes_count)
+title('Median # of LGTMs with MATLAB/Simulink tag')
+ylabel('Median LGTMs')
+```
+
+
+![figure_2.png](README_images/figure_2.png)
+
+## 平均値（トリム平均）
+
+
+外れ値に対して強い平均値としては上位・下位ｘ％を除外して平均値をとるトリム平均もあります。Statistics and Machine Learning Toolbox の `trimmean` が便利。今度は年間集計ということで 'yearly' とします。`trimmean` では上位・下位5％づつ削除した平均値とします。 
+
+
+
+```matlab:Code
+if license('checkout','Statistics_Toolbox')
+    tmp = retime(tData(:,'likes_count'),'yearly',@(x) trimmean(x, 10));
+```
+
+
+
+棒グラフ表示します。これだと増えているように見えますね。
+
+
+
+```matlab:Code
+    bar(tmp.Time,tmp.likes_count)
+    title('Trim mean # of LGTMs with MATLAB/Simulink tag')
+    ylabel('Trim Mean LGTMs')
+end
+```
+
+
+![figure_3.png](README_images/figure_3.png)
+
+  
 # OnThisDay
 
 
@@ -333,7 +394,7 @@ histogram(categorical(tData.dayofWeek));
 ```
 
 
-![figure_2.png](README_images/figure_2.png)
+![figure_4.png](README_images/figure_4.png)
 
 
 
@@ -351,5 +412,5 @@ histogram(categorical(tData.dayofWeek),["Sunday","Monday","Tuesday","Wednesday",
 ```
 
 
-![figure_3.png](README_images/figure_3.png)
+![figure_5.png](README_images/figure_5.png)
 
